@@ -51,7 +51,6 @@ function _clone(data: any, currentKey: string, keys: string[], idSet: Set<string
  * 一个简单的深拷贝方法
  * 只会拷贝简单类型key
  * @param keys 允许拷贝的key
- * @param ignoerKeys 忽略判断，直接赋值的key(未拷贝)
  * @param opt 树解析配置
  * @returns 拷贝方法
  */
