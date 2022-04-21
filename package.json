@@ -27,8 +27,8 @@
     "types": "./dist/@types/index.d.ts",
     "unpkg": "./dist/umd/yiu-tree.min.js",
     "jsdelivr": "./dist/iife/yiu-tree.min.js",
-    "browser": "./dist/umd/yiu-tree.ex.min.js",
-    "main": "./dist/umd/yiu-tree.ex.min.js",
+    "browser": "./dist/umd/yiu-tree.min.js",
+    "main": "./dist/umd/yiu-tree.min.js",
     "module": "./dist/esm/yiu-tree.min.js",
     "exports": {
         ".": {
