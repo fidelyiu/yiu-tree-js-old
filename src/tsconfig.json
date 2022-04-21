@@ -1,0 +1,10 @@
+{
+    "extends": "../tsconfig.base.json",
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "esModuleInterop": true
+    },
+    "include": ["./*.ts", "./**/*.ts"]
+}

@@ -1,0 +1,7 @@
+{
+    // https://github.com/rollup/rollup-plugin-typescript/issues/68
+    "compilerOptions": {
+        "rootDir": ".",
+        "allowSyntheticDefaultImports": true
+    }
+}

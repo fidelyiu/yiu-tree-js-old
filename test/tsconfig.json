@@ -1,0 +1,12 @@
+{
+    "extends": "../tsconfig.base.json",
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "noEmit": true
+    },
+    "include": ["./*.ts", "./**/*.ts"],
+    "references": [{ "path": "../src/tsconfig.type.json" }]
+}
