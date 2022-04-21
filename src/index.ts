@@ -26,3 +26,7 @@ export { opAll, opBySearch };
 // is工具
 import isTree from "./is/is-tree";
 export { isTree };
+
+// 简单深拷贝生成方法
+import YiuClone from "./base/deep-clone-simple";
+export { YiuClone };
