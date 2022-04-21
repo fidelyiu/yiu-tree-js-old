@@ -1,3 +1,4 @@
+import getDeepTree from "../base/get-deep-tree";
 import getTreePropsValue from "../base/get-tree-props-value";
 import setTreePropsValue from "../base/set-tree-props-value";
 
@@ -8,14 +9,10 @@ function _getFilterBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, curren
     if (!opt) opt = {};
     const parentMatch = !!opt.parentMatch;
     const childrenMatch = !!opt.childrenMatch;
-    let deepClone = opt.deepCloneFunc;
-    if (!deepClone || typeof deepClone !== "function") {
-        deepClone = (data: any) => JSON.parse(JSON.stringify(data));
-    }
     if (typeof scFunc !== "function" || !treeData || !treeData.length) {
         return result;
     }
-    const cloneTreeData = <Array<any>>deepClone(treeData);
+    const cloneTreeData = getDeepTree(treeData, opt, true);
     if (parentMatch) {
         // 父节点必须匹配
         let index = 0;

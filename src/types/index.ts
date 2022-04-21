@@ -18,7 +18,6 @@ export type TreeFilterOption = {
      * 默认false，子节点是否必须 需要匹配
      */
     childrenMatch?: boolean;
-    deepCloneFunc?: Function;
 } & TreeBaseOpt;
 
 export type TreeKeyType = "id" | "pid" | "children";
@@ -47,4 +46,13 @@ export type TreeBaseOpt = {
     pidSetter?: (treeNode: any, value: any) => void;
     childrenGetter?: (treeNode: any) => Array<any> | undefined;
     childrenSetter?: (treeNode: any, value: any) => void;
+    /**
+     * 是否深拷贝
+     */
+    deepClone?: boolean;
+    /**
+     * 深拷贝函数
+     * 默认`JSON.parse(JSON.stringify(data))`
+     */
+    deepCloneFunc?: Function;
 };

@@ -1,3 +1,4 @@
+import getDeepTree from "../base/get-deep-tree";
 import getTreePropsValue from "../base/get-tree-props-value";
 import setTreePropsValue from "../base/set-tree-props-value";
 
@@ -26,8 +27,9 @@ function _opBySearch(treeData: Array<any>, opFunc: TreeOperationFunc, scFunc: Tr
  * @returns
  */
 export default function opBySearch(treeData: Array<any>, opFunc: TreeOperationFunc, scFunc: TreeSearchFunc, opt?: TreeBaseOpt): Array<any> {
-    if (typeof scFunc !== "function" || typeof opFunc !== "function") {
+    const deepData = getDeepTree(treeData, opt, true)
+    if (typeof scFunc !== "function" || typeof opFunc !== "function" || !Array.isArray(deepData)) {
         return treeData;
     }
-    return _opBySearch(treeData.slice(), opFunc, scFunc, 0, opt);
+    return _opBySearch(deepData, opFunc, scFunc, 0, opt);
 }

@@ -3,6 +3,7 @@ import getTreePropsValue from "../base/get-tree-props-value";
 import setTreePropsValue from "../base/set-tree-props-value";
 
 import type { TreeBaseOpt } from "../types";
+import getDeepTree from "../base/get-deep-tree";
 
 /**
  * 根据List生成Tree
@@ -11,9 +12,10 @@ import type { TreeBaseOpt } from "../types";
  * @returns
  */
 export default function getTreeByList(list: Array<any>, opt?: TreeBaseOpt) {
-    if (!Array.isArray(list) || !list.length) return [];
+    const deepData = getDeepTree(list, opt, true);
+    if (!Array.isArray(deepData) || !deepData.length) return [];
     let result: Array<any> = [];
-    list.forEach((item) => {
+    deepData.forEach((item) => {
         result = mergeNodeToTree(result, item, opt);
     });
     return result;

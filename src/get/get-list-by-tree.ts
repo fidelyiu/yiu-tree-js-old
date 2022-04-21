@@ -1,3 +1,4 @@
+import getDeepTree from "../base/get-deep-tree";
 import getTreePropsValue from "../base/get-tree-props-value";
 
 import type { TreeBaseOpt } from "../types";
@@ -9,9 +10,10 @@ import type { TreeBaseOpt } from "../types";
  * @returns 所有树的节点数组
  */
 export default function getListByTree(treeData: Array<any>, opt?: TreeBaseOpt): Array<any> {
-    if (!treeData || !Array.isArray(treeData)) return [];
+    const deepData = getDeepTree(treeData, opt, true)
+    if (!deepData || !Array.isArray(deepData)) return [];
     const result: Array<any> = [];
-    const stack = [...treeData];
+    const stack = [...deepData];
     const idSet = new Set();
     while (stack.length) {
         const node = stack.pop();

@@ -1,3 +1,4 @@
+import getDeepTree from "../base/get-deep-tree";
 import getTreePropsValue from "../base/get-tree-props-value";
 
 import type { TreeBaseOpt, TreeSearchFunc } from "../types";
@@ -31,5 +32,6 @@ function _getOneNodePathBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, c
  * @returns 找到的节点即父节点数组
  */
 export default function getOneNodePathBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, opt?: TreeBaseOpt): Array<any> | [] {
-    return _getOneNodePathBySearch(treeData, scFunc, 0, opt);
+    const deepData = getDeepTree(treeData, opt, true);
+    return _getOneNodePathBySearch(deepData, scFunc, 0, opt);
 }

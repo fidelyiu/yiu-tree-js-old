@@ -1,3 +1,4 @@
+import getDeepTree from "../base/get-deep-tree";
 import getTreePropsValue from "../base/get-tree-props-value";
 
 import type { TreeBaseOpt, TreeSearchFunc } from "../types";
@@ -28,5 +29,6 @@ function _hasBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, currentLevel
  * @returns
  */
 export default function hasBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, opt?: TreeBaseOpt): boolean {
-    return _hasBySearch(treeData, scFunc, 0, opt);
+    const deepData = getDeepTree(treeData, opt, false)
+    return _hasBySearch(deepData, scFunc, 0, opt);
 }
