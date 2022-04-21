@@ -83,7 +83,7 @@ export type TreeBaseOpt = {
 你有三种解析树节点的策略：
 - `def`: 默认`id`、`children`、`pid`。
 - `key`：使用给定的`opt.idProp`、`opt.childrenProp`、`opt.pidProp`作为key。
-- `func`：使用给定的`opt.idGetter(node)`、`opt.childrenGetter(node)`、`opt.pidGetter(node)`函数执行结果作为key。
+- `func`：使用给定的`opt.idGetter(node)`、`opt.childrenGetter(node)`、`opt.pidGetter(node)`函数执行结果作为值。
 
 以上说的是从节点中获取一个值的策略，而写入一个值的策略稍微不用的是`opt.idSetter`、`opt.childrenSetter`、`opt.pidSetter`。
 
