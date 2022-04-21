@@ -10,7 +10,7 @@ import type { TreeBaseOpt } from "../types";
  * @returns 所有树的节点数组
  */
 export default function getListByTree(treeData: Array<any>, opt?: TreeBaseOpt): Array<any> {
-    const deepData = getDeepTree(treeData, opt, true)
+    const deepData = getDeepTree(treeData, opt, true);
     if (!deepData || !Array.isArray(deepData)) return [];
     const result: Array<any> = [];
     const stack = [...deepData];

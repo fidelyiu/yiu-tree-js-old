@@ -9,10 +9,19 @@ function _getOneNodePathBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, c
     }
     let index = 0;
     for (const treeNode of treeData) {
-        if (scFunc(treeNode, currentLevel + 1, index)) {
+        const children = getTreePropsValue(treeNode, "children", opt);
+
+        if (
+            scFunc(treeNode, {
+                level: currentLevel + 1,
+                index,
+                isLeaf: !children.length,
+                isFirst: index === 0,
+                isLast: index === children.length - 1,
+            })
+        ) {
             return [treeNode];
         }
-        const children = getTreePropsValue(treeNode, "children", opt);
         if (Array.isArray(children) && children.length) {
             const childrenResult = _getOneNodePathBySearch(children, scFunc, currentLevel + 1, opt);
             if (childrenResult && childrenResult.length) {

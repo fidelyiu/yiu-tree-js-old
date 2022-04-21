@@ -1,11 +1,33 @@
+export type TreeNodeInfo = {
+    /**
+     * 层级数
+     */
+    level: number;
+    /**
+     * 当前List中索引数
+     */
+    index: number;
+    /**
+     * 是否是叶子节点
+     */
+    isLeaf: boolean;
+    /**
+     * 是否是第一个节点
+     */
+    isFirst: boolean;
+    /**
+     * 是否是最后一个节点
+     */
+    isLast: boolean;
+};
 /**
  * 树的搜索函数类型
  */
-export type TreeSearchFunc = (treeNode: any, level: number, index: number) => boolean;
+export type TreeSearchFunc = (treeNode: any, info?: TreeNodeInfo) => boolean;
 /**
  * 树的操作函数类型
  */
-export type TreeOperationFunc = (treeNode: any, level: number, index: number) => void;
+export type TreeOperationFunc = (treeNode: any, info?: TreeNodeInfo) => void;
 /**
  * 树的过滤配置类型
  */

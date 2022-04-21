@@ -17,14 +17,18 @@ function _getFilterBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, curren
         // 父节点必须匹配
         let index = 0;
         for (const treeNode of cloneTreeData) {
-            // 当前节点是否匹配
-            const currentMatch = !!scFunc(treeNode, currentLevel + 1, index);
-            if (!currentMatch) {
-                // 不匹配直接跳过
-                continue;
-            }
             // 处理子节点
             const children = getTreePropsValue(treeNode, "children", opt);
+            // 当前节点是否匹配
+            const currentMatch = !!scFunc(treeNode, {
+                level: currentLevel + 1,
+                index,
+                isLeaf: !children.length,
+                isFirst: index === 0,
+                isLast: index === children.length - 1,
+            });
+            // 不匹配直接跳过
+            if (!currentMatch) continue;
             if (Array.isArray(children) && children.length) {
                 if (childrenMatch) {
                     setTreePropsValue(treeNode, "children", _getFilterBySearch(children, scFunc, currentLevel + 1, opt), opt);
@@ -42,7 +46,13 @@ function _getFilterBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, curren
         for (const treeNode of cloneTreeData) {
             const children = getTreePropsValue(treeNode, "children", opt);
             // 当前节点是否匹配
-            const currentMatch = !!scFunc(treeNode, currentLevel + 1, index);
+            const currentMatch = !!scFunc(treeNode, {
+                level: currentLevel + 1,
+                index,
+                isLeaf: !children.length,
+                isFirst: index === 0,
+                isLast: index === children.length - 1,
+            });
             if (currentMatch) {
                 // 如果当前节点匹配了，就直接处理子节点
                 if (childrenMatch) {

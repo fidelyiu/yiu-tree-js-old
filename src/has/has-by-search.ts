@@ -9,10 +9,18 @@ function _hasBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, currentLevel
     }
     let index = 0;
     for (const treeNode of treeData) {
-        if (scFunc(treeNode, currentLevel + 1, index)) {
+        const children = getTreePropsValue(treeNode, "children", opt);
+        if (
+            scFunc(treeNode, {
+                level: currentLevel + 1,
+                index,
+                isLeaf: !children.length,
+                isFirst: index === 0,
+                isLast: index === children.length - 1,
+            })
+        ) {
             return true;
         }
-        const children = getTreePropsValue(treeNode, "children", opt);
         if (Array.isArray(children) && children.length && _hasBySearch(children, scFunc, currentLevel + 1, opt)) {
             return true;
         }
@@ -29,6 +37,6 @@ function _hasBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, currentLevel
  * @returns
  */
 export default function hasBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, opt?: TreeBaseOpt): boolean {
-    const deepData = getDeepTree(treeData, opt, false)
+    const deepData = getDeepTree(treeData, opt, false);
     return _hasBySearch(deepData, scFunc, 0, opt);
 }
