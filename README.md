@@ -212,3 +212,59 @@ const result = getFilterBySearch(treeData, scFunc, opt)
 ### 5.4.1.`opAll`
 
 ### 5.4.2.`opBySearch`
+
+
+# 6.注意
+
+## 6.1.回调信息
+
+`YiuTree`的`TreeSearchFunc`、和`TreeOperationFunc`都包含了节点的一些附加信息，这些信息在某些场景下很有用。
+
+```typescript
+export type TreeNodeInfo = {
+    /**
+     * 层级数
+     */
+    level: number;
+    /**
+     * 当前List中索引数
+     */
+    index: number;
+    /**
+     * 是否是叶子节点
+     */
+    isLeaf: boolean;
+    /**
+     * 是否是第一个节点
+     */
+    isFirst: boolean;
+    /**
+     * 是否是最后一个节点
+     */
+    isLast: boolean;
+};
+/**
+ * 树的搜索函数类型
+ */
+export type TreeSearchFunc = (treeNode: any, info?: TreeNodeInfo) => boolean;
+/**
+ * 树的操作函数类型
+ */
+export type TreeOperationFunc = (treeNode: any, info?: TreeNodeInfo) => void;
+```
+
+## 6.2.Tree Shaking
+如果需要Tree Shaking，只要不全部`import`即可。
+```js
+// 👍good
+import { getFilterBySearch } from "yiu-tree";
+
+// 👎bad
+import YiuTree from "yiu-tree";
+```
+
+TS类型
+```typescript
+// 👍good
+import type { YiuTreeType } from "yiu-tree";
+```
