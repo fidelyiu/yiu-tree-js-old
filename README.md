@@ -113,21 +113,40 @@ export type TreeFilterOption = {
 ```
 
 使用如下：
+
+场景1（普通搜索，只要节点匹配了，父子节点都匹配）
 ```js
 const treeData = [
-    { id: '1', name: '' },
-    { id: '2' },
-    { id: '3' }
+    {
+        id: "1",
+        name: "name-1",
+        children: [
+            { id: "1-1", name: "name-1-1" },
+            { id: "1-2", name: "name-1-2" },
+            { id: "1-3", name: "name-1-3" },
+        ],
+    },
+    {
+        id: "2",
+        children: [
+            { id: "2-1", name: "name-2-1" },
+            { id: "2-2", name: "name-2-2" },
+            { id: "2-3", name: "name-2-3" },
+        ],
+    },
 ]
-
-const scFunc = (node, nodeInfo) => {
-    return 
-}
-
-const opt = {
-
-}
-
-const result = getFilterBySearch(treeData, scFunc, opt)
+const scFunc = (node, nodeInfo) => node?.name && node.name.indexOf("name-1") > -1;
+const result = getFilterBySearch(treeData, scFunc)
+// resut => [
+//     {
+//         id: "1",
+//         name: "name-1",
+//         children: [
+//             { id: "1-1", name: "name-1-1" },
+//             { id: "1-2", name: "name-1-2" },
+//             { id: "1-3", name: "name-1-3" },
+//         ],
+//     },
+// ]
 ```
 
