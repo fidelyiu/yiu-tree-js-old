@@ -115,10 +115,19 @@ export type TreeFilterOption = {
 使用如下：
 ```js
 const treeData = [
-    { id: '1' },
+    { id: '1', name: '' },
     { id: '2' },
     { id: '3' }
 ]
-getFilterBySearch(treeData, scFunc, opt)
+
+const scFunc = (node, nodeInfo) => {
+    return 
+}
+
+const opt = {
+
+}
+
+const result = getFilterBySearch(treeData, scFunc, opt)
 ```
 

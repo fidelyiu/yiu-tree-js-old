@@ -4,9 +4,6 @@ import getTreePropsValue from "../base/get-tree-props-value";
 import type { TreeBaseOpt, TreeSearchFunc } from "../types";
 
 function _hasBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, currentLevel: number, opt?: TreeBaseOpt): boolean {
-    if (typeof scFunc !== "function" || !Array.isArray(treeData) || !treeData.length) {
-        return false;
-    }
     let index = 0;
     for (const treeNode of treeData) {
         const children = getTreePropsValue(treeNode, "children", opt);
@@ -16,7 +13,7 @@ function _hasBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, currentLevel
                 index,
                 isLeaf: !children.length,
                 isFirst: index === 0,
-                isLast: index === children.length - 1,
+                isLast: index === treeData.length - 1,
             })
         ) {
             return true;
@@ -37,6 +34,8 @@ function _hasBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, currentLevel
  * @returns
  */
 export default function hasBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, opt?: TreeBaseOpt): boolean {
+    if (typeof scFunc !== "function") return false;
     const deepData = getDeepTree(treeData, opt, false);
+    if (!Array.isArray(deepData) || !deepData.length) return false;
     return _hasBySearch(deepData, scFunc, 0, opt);
 }

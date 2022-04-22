@@ -4,20 +4,16 @@ import getTreePropsValue from "../base/get-tree-props-value";
 import type { TreeBaseOpt, TreeSearchFunc } from "../types";
 
 function _getOneNodePathBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, currentLevel: number, opt?: TreeBaseOpt): Array<any> | [] {
-    if (typeof scFunc !== "function" || !treeData || !treeData.length) {
-        return [];
-    }
     let index = 0;
     for (const treeNode of treeData) {
         const children = getTreePropsValue(treeNode, "children", opt);
-
         if (
             scFunc(treeNode, {
                 level: currentLevel + 1,
                 index,
                 isLeaf: !children.length,
                 isFirst: index === 0,
-                isLast: index === children.length - 1,
+                isLast: index === treeData.length - 1,
             })
         ) {
             return [treeNode];
@@ -41,6 +37,8 @@ function _getOneNodePathBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, c
  * @returns 找到的节点即父节点数组
  */
 export default function getOneNodePathBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, opt?: TreeBaseOpt): Array<any> | [] {
+    if (typeof scFunc !== "function") return [];
     const deepData = getDeepTree(treeData, opt, true);
+    if (!Array.isArray(deepData) || !deepData.length) return [];
     return _getOneNodePathBySearch(deepData, scFunc, 0, opt);
 }

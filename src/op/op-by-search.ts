@@ -16,7 +16,7 @@ function _opBySearch(treeData: Array<any>, opFunc: TreeOperationFunc, scFunc: Tr
                 index,
                 isLeaf: !children.length,
                 isFirst: index === 0,
-                isLast: index === children.length - 1,
+                isLast: index === treeData.length - 1,
             })
         ) {
             // 符合要求的item
@@ -25,7 +25,7 @@ function _opBySearch(treeData: Array<any>, opFunc: TreeOperationFunc, scFunc: Tr
                 index,
                 isLeaf: !children.length,
                 isFirst: index === 0,
-                isLast: index === children.length - 1,
+                isLast: index === treeData.length - 1,
             });
         }
     });
@@ -41,9 +41,8 @@ function _opBySearch(treeData: Array<any>, opFunc: TreeOperationFunc, scFunc: Tr
  * @returns
  */
 export default function opBySearch(treeData: Array<any>, opFunc: TreeOperationFunc, scFunc: TreeSearchFunc, opt?: TreeBaseOpt): Array<any> {
+    if (typeof scFunc !== "function" || typeof opFunc !== "function") return treeData;
     const deepData = getDeepTree(treeData, opt, true);
-    if (typeof scFunc !== "function" || typeof opFunc !== "function" || !Array.isArray(deepData)) {
-        return treeData;
-    }
+    if (!Array.isArray(deepData)) return treeData;
     return _opBySearch(deepData, opFunc, scFunc, 0, opt);
 }
