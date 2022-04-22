@@ -1,6 +1,6 @@
 {
     "name": "yiu-tree-js",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "A js library for manipulating trees.",
     "scripts": {
         "test": "ts-node ./scripts/jest.ts",
