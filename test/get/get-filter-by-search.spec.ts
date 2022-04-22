@@ -13,7 +13,7 @@ const eachList: Array<{
                 id: "1",
                 name: "name-1",
                 children: [
-                    { id: "1-1", name: "name-1-1" },
+                    { id: "1-1", name: "name-@1-1" },
                     { id: "1-2", name: "name-1-2" },
                     { id: "1-3", name: "name-1-3" },
                 ],
@@ -34,7 +34,7 @@ const eachList: Array<{
                 id: "1",
                 name: "name-1",
                 children: [
-                    { id: "1-1", name: "name-1-1" },
+                    { id: "1-1", name: "name-@1-1" },
                     { id: "1-2", name: "name-1-2" },
                     { id: "1-3", name: "name-1-3" },
                 ],
@@ -47,7 +47,7 @@ const eachList: Array<{
                 id: "1",
                 name: "name-1",
                 cList: [
-                    { id: "1-1", name: "name-1-1" },
+                    { id: "1-1", name: "name-@1-1" },
                     { id: "1-2", name: "name-1-2" },
                     { id: "1-3", name: "name-1-3" },
                 ],
@@ -71,7 +71,40 @@ const eachList: Array<{
                 id: "1",
                 name: "name-1",
                 cList: [
-                    { id: "1-1", name: "name-1-1" },
+                    { id: "1-1", name: "name-@1-1" },
+                    { id: "1-2", name: "name-1-2" },
+                    { id: "1-3", name: "name-1-3" },
+                ],
+            },
+        ],
+    },
+    {
+        treeData: [
+            {
+                id: "1",
+                name: "name-1",
+                cList: [
+                    { id: "1-1", name: "name-@1-1" },
+                    { id: "1-2", name: "name-1-2" },
+                    { id: "1-3", name: "name-1-3" },
+                ],
+            },
+            {
+                id: "2",
+                cList: [
+                    { id: "2-1", name: "name-2-1" },
+                    { id: "2-2", name: "name-2-2" },
+                    { id: "2-3", name: "name-2-3" },
+                ],
+            },
+        ],
+        scFunc: (node: any) => node?.name && node.name.indexOf("name-1") > -1,
+        result: [
+            {
+                id: "1",
+                name: "name-1",
+                cList: [
+                    { id: "1-1", name: "name-@1-1" },
                     { id: "1-2", name: "name-1-2" },
                     { id: "1-3", name: "name-1-3" },
                 ],
