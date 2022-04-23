@@ -43,12 +43,7 @@ export type TreeFilterOption = {
 } & TreeBaseOpt;
 
 export type TreeKeyType = "id" | "pid" | "children";
-export type TreeBaseOptKeyMode = "def" | "key" | "func";
 export type TreeBaseOpt = {
-    /**
-     * 解析key的方式
-     */
-    keyMode?: TreeBaseOptKeyMode;
     /**
      * 使用`key`解析时
      */

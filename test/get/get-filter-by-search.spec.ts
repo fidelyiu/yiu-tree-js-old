@@ -62,10 +62,7 @@ const eachList: Array<{
             },
         ],
         scFunc: (node: any) => node?.name && node.name.indexOf("name-1") > -1,
-        opt: {
-            keyMode: "key",
-            childrenProp: "cList",
-        },
+        opt: { childrenProp: "cList" },
         result: [
             {
                 id: "1",

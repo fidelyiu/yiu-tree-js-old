@@ -41,12 +41,7 @@ const treeData = [
 `YiuTree`工具的最后一个参数始终是树解析配置`YiuTreeType.TreeBaseOpt`，以下是他的类型定义。
 
 ```typescript
-export type TreeBaseOptKeyMode = "def" | "key" | "func";
 export type TreeBaseOpt = {
-    /**
-     * 解析key的方式
-     */
-    keyMode?: TreeBaseOptKeyMode;
     /**
      * 使用`key`解析时
      */
@@ -84,6 +79,8 @@ export type TreeBaseOpt = {
 - `def`: 默认`id`、`children`、`pid`。
 - `key`：使用给定的`opt.idProp`、`opt.childrenProp`、`opt.pidProp`作为key。
 - `func`：使用给定的`opt.idGetter(node)`、`opt.childrenGetter(node)`、`opt.pidGetter(node)`函数执行结果作为值。
+
+`func` > `key` > `def`。
 
 以上说的是从节点中获取一个值的策略，而写入一个值的策略稍微不用的是`opt.idSetter`、`opt.childrenSetter`、`opt.pidSetter`。
 
@@ -172,7 +169,7 @@ const treeData = [
     },
 ]
 const scFunc = (node, nodeInfo) => node?.name && node.name.indexOf("name-1") > -1;
-const opt = { keyMode: "key", childrenProp: "cList" }
+const opt = { childrenProp: "cList" }
 const result = getFilterBySearch(treeData, scFunc, opt)
 // resut => [
 //     {
