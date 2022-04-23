@@ -1,6 +1,6 @@
 {
     "name": "yiu-tree-js",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "A js library for manipulating trees.",
     "scripts": {
         "test": "ts-node ./scripts/jest.ts",
@@ -33,7 +33,7 @@
     "exports": {
         ".": {
             "import": "./dist/esm/yiu-tree.min.js",
-            "require": "./dist/umd/yiu-tree.ex.min.js"
+            "require": "./dist/umd/yiu-tree.min.js"
         }
     },
     "repository": "https://github.com/fidelyiu/yiu-tree-js.git",
