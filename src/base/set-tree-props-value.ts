@@ -28,7 +28,7 @@ export default function setTreePropsValue(treeNode: any, key: TreeKeyType, value
             break;
         }
         case "children": {
-            if (typeof baseOpt.pidSetter === "undefined") {
+            if (typeof baseOpt.childrenSetter === "undefined") {
                 const childrenProp = baseOpt.childrenProp || "children";
                 treeNode[childrenProp] = value;
             } else if (typeof baseOpt.childrenSetter === "function") {

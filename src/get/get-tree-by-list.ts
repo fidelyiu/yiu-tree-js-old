@@ -30,7 +30,7 @@ function mergeNodeToTree(tree: Array<any>, node: any, opt?: TreeBaseOpt): Array<
         return mergeTreeToNode(tree, node, opt);
     }
     let hasMerge = false;
-    treeOpBySearch(
+    const result = treeOpBySearch(
         tree,
         (item) => {
             if (hasMerge) return;
@@ -44,7 +44,7 @@ function mergeNodeToTree(tree: Array<any>, node: any, opt?: TreeBaseOpt): Array<
         (item) => getTreePropsValue(item, "id", opt) === pid,
         opt
     );
-    if (hasMerge) return tree.slice();
+    if (hasMerge) return result;
     return mergeTreeToNode(tree, node);
 }
 
