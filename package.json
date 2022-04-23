@@ -5,7 +5,8 @@
     "scripts": {
         "test": "ts-node ./scripts/jest.ts",
         "build": "ts-node ./scripts/build.ts",
-        "clear:node_modules": "rimraf node_modules"
+        "clear:node_modules": "rimraf node_modules",
+        "push": "cd dist && npm publish"
     },
     "devDependencies": {
         "@rollup/plugin-typescript": "^8.3.1",

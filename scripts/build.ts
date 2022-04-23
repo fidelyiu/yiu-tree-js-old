@@ -64,7 +64,8 @@ function bootstrap() {
             .replace(/\s*"scripts": {/g, "")
             .replace(/\s*"test": "ts-node .\/scripts\/jest.ts",/g, "")
             .replace(/\s*"build": "ts-node .\/scripts\/build.ts",/g, "")
-            .replace(/\s*"clear:node_modules": "rimraf node_modules"\s*},/g, "")
+            .replace(/\s*"clear:node_modules": "rimraf node_modules",/g, "")
+            .replace(/\s*"push": "cd dist && npm publish"\s*},/g, "")
             .replace(/\.\/dist/g, "."),
         { encoding: "utf8" }
     );
