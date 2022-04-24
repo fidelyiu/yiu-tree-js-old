@@ -21,6 +21,7 @@ export default function getListByTree(treeData: Array<any>, opt?: TreeBaseOpt): 
         const id = getTreePropsValue(node, "id", opt);
         if (!idSet.has(id)) {
             idSet.add(id);
+            result.push(node);
             const children = getTreePropsValue(node, "children", opt);
             if (children && Array.isArray(children)) {
                 stack.unshift(...children);
