@@ -11,8 +11,9 @@ import getMaxLevel from "./get/get-max-level";
 import getOneNodeBySearch from "./get/get-one-node-by-search";
 import getOneNodePathBySearch from "./get/get-one-node-path-by-search";
 import getTreeByList from "./get/get-tree-by-list";
+import getTreeByListSimple from "./get/get-tree-by-list-simple";
 import getListByTree from "./get/get-list-by-tree";
-export { getFilterBySearch, getMaxLevel, getOneNodeBySearch, getOneNodePathBySearch, getTreeByList, getListByTree };
+export { getFilterBySearch, getMaxLevel, getOneNodeBySearch, getOneNodePathBySearch, getTreeByList, getTreeByListSimple, getListByTree };
 
 // has工具
 import hasBySearch from "./has/has-by-search";

@@ -11,7 +11,7 @@ import getDeepTree from "../base/get-deep-tree";
  * @param opt 节点解析配置
  * @returns
  */
-export default function getTreeByList(list: Array<any>, opt?: TreeBaseOpt) {
+export default function getTreeByList(list: Array<any>, opt?: TreeBaseOpt): Array<any> {
     const deepData = getDeepTree(list, opt, true);
     if (!Array.isArray(deepData) || !deepData.length) return [];
     let result: Array<any> = [];
