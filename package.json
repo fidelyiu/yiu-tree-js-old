@@ -39,5 +39,10 @@
     },
     "repository": "https://github.com/fidelyiu/yiu-tree-js.git",
     "author": "Fidel Yiu <fidel-yiu@foxmail.com>",
-    "license": "MIT"
+    "license": "MIT",
+    "keywords": [
+        "tree",
+        "util",
+        "tool"
+    ]
 }
