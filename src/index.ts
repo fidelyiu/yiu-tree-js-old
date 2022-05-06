@@ -7,13 +7,14 @@ export type { YiuTreeType };
 
 // get工具
 import getFilterBySearch from "./get/get-filter-by-search";
+import getLeafNodeByList from "./get/get-leaf-node-by-list";
 import getMaxLevel from "./get/get-max-level";
 import getOneNodeBySearch from "./get/get-one-node-by-search";
 import getOneNodePathBySearch from "./get/get-one-node-path-by-search";
 import getTreeByList from "./get/get-tree-by-list";
 import getTreeByListSimple from "./get/get-tree-by-list-simple";
 import getListByTree from "./get/get-list-by-tree";
-export { getFilterBySearch, getMaxLevel, getOneNodeBySearch, getOneNodePathBySearch, getTreeByList, getTreeByListSimple, getListByTree };
+export { getFilterBySearch, getLeafNodeByList, getMaxLevel, getOneNodeBySearch, getOneNodePathBySearch, getTreeByList, getTreeByListSimple, getListByTree };
 
 // has工具
 import hasBySearch from "./has/has-by-search";
