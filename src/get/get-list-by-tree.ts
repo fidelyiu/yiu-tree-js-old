@@ -24,7 +24,7 @@ export default function getListByTree(treeData: Array<any>, opt?: TreeBaseOpt): 
             result.push(node);
             const children = getTreePropsValue(node, "children", opt);
             if (children && Array.isArray(children)) {
-                stack.unshift(...children);
+                stack.push(...children);
             }
         }
     }
