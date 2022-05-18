@@ -4,11 +4,11 @@ import setTreePropsValue from "../base/set-tree-props-value";
 
 import type { TreeBaseOpt, TreeOperationFunc, TreeSearchFunc } from "../types";
 
-function _opBySearch(treeData: Array<any>, opFunc: TreeOperationFunc, scFunc: TreeSearchFunc, currentLevel: number, opt?: TreeBaseOpt): Array<any> {
+function _opBySearch(treeData: Array<any>, opFunc: TreeOperationFunc, scFunc: TreeSearchFunc, currentLevel: number, parent: any, opt?: TreeBaseOpt): Array<any> {
     treeData.forEach((item, index) => {
         const children = getTreePropsValue(item, "children", opt);
         if (Array.isArray(children) && children.length > 0) {
-            setTreePropsValue(item, "children", _opBySearch(children, opFunc, scFunc, currentLevel + 1, opt), opt);
+            setTreePropsValue(item, "children", _opBySearch(children, opFunc, scFunc, currentLevel + 1, item, opt), opt);
         }
         if (
             scFunc(item, {
@@ -17,6 +17,7 @@ function _opBySearch(treeData: Array<any>, opFunc: TreeOperationFunc, scFunc: Tr
                 isLeaf: !children.length,
                 isFirst: index === 0,
                 isLast: index === treeData.length - 1,
+                parent,
             })
         ) {
             // 符合要求的item
@@ -26,6 +27,7 @@ function _opBySearch(treeData: Array<any>, opFunc: TreeOperationFunc, scFunc: Tr
                 isLeaf: !children.length,
                 isFirst: index === 0,
                 isLast: index === treeData.length - 1,
+                parent,
             });
         }
     });
@@ -44,5 +46,5 @@ export default function opBySearch(treeData: Array<any>, opFunc: TreeOperationFu
     if (typeof scFunc !== "function" || typeof opFunc !== "function") return treeData;
     const deepData = getDeepTree(treeData, opt, true);
     if (!Array.isArray(deepData)) return treeData;
-    return _opBySearch(deepData, opFunc, scFunc, 0, opt);
+    return _opBySearch(deepData, opFunc, scFunc, 0, undefined, opt);
 }

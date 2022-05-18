@@ -4,7 +4,7 @@ import setTreePropsValue from "../base/set-tree-props-value";
 
 import type { TreeFilterOption, TreeSearchFunc } from "../types";
 
-function _getFilterBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, currentLevel: number, opt?: TreeFilterOption): Array<any> {
+function _getFilterBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, currentLevel: number, parent: any, opt?: TreeFilterOption): Array<any> {
     const result: Array<any> = [];
     if (!opt) opt = {};
     const parentMatch = !!opt.parentMatch;
@@ -22,12 +22,13 @@ function _getFilterBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, curren
                 isLeaf: !children.length,
                 isFirst: index === 0,
                 isLast: index === treeData.length - 1,
+                parent,
             });
             // 不匹配直接跳过
             if (!currentMatch) continue;
             if (Array.isArray(children) && children.length) {
                 if (childrenMatch) {
-                    setTreePropsValue(treeNode, "children", _getFilterBySearch(children, scFunc, currentLevel + 1, opt), opt);
+                    setTreePropsValue(treeNode, "children", _getFilterBySearch(children, scFunc, currentLevel + 1, treeNode, opt), opt);
                 }
             } else {
                 setTreePropsValue(treeNode, "children", [], opt);
@@ -48,17 +49,18 @@ function _getFilterBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, curren
                 isLeaf: !children.length,
                 isFirst: index === 0,
                 isLast: index === treeData.length - 1,
+                parent,
             });
             if (currentMatch) {
                 // 如果当前节点匹配了，就直接处理子节点
                 if (childrenMatch) {
-                    setTreePropsValue(treeNode, "children", _getFilterBySearch(children, scFunc, currentLevel + 1, opt), opt);
+                    setTreePropsValue(treeNode, "children", _getFilterBySearch(children, scFunc, currentLevel + 1, treeNode, opt), opt);
                 }
                 result.push(treeNode);
             } else {
                 // 当前节点不匹配
                 if (Array.isArray(children) && children.length) {
-                    const childrenMatchResult = _getFilterBySearch(children, scFunc, currentLevel + 1, opt);
+                    const childrenMatchResult = _getFilterBySearch(children, scFunc, currentLevel + 1, treeNode, opt);
                     // 如果此时还存在子节点就输出
                     if (Array.isArray(childrenMatchResult) && childrenMatchResult.length) {
                         // 将节点按照当前查询条件再过滤一遍
@@ -84,5 +86,5 @@ export default function getFilterBySearch(treeData: Array<any>, scFunc: TreeSear
     if (typeof scFunc !== "function") return [];
     const cloneTreeData = getDeepTree(treeData, opt, true);
     if (!Array.isArray(cloneTreeData) || !cloneTreeData.length) return [];
-    return _getFilterBySearch(cloneTreeData, scFunc, 0, opt);
+    return _getFilterBySearch(cloneTreeData, scFunc, 0, undefined, opt);
 }

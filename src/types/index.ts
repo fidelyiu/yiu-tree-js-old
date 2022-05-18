@@ -19,6 +19,10 @@ export type TreeNodeInfo = {
      * 是否是最后一个节点
      */
     isLast: boolean;
+    /**
+     * 父节点
+     */
+    parent: any;
 };
 /**
  * 树的搜索函数类型
