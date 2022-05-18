@@ -9,24 +9,26 @@ function _getFilterBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, curren
     if (!opt) opt = {};
     const parentMatch = !!opt.parentMatch;
     const childrenMatch = !!opt.childrenMatch;
+    const treeDataLen = treeData.length;
     if (parentMatch) {
         // 父节点必须匹配
-        let index = 0;
-        for (const treeNode of treeData) {
+        for (let index = 0; index < treeDataLen; index++) {
+            const treeNode = treeData[index];
             // 处理子节点
             const children = getTreePropsValue(treeNode, "children", opt);
+            const childrenLen = children.length;
             // 当前节点是否匹配
             const currentMatch = !!scFunc(treeNode, {
                 level: currentLevel + 1,
                 index,
-                isLeaf: !children.length,
+                isLeaf: !childrenLen,
                 isFirst: index === 0,
-                isLast: index === treeData.length - 1,
+                isLast: index === treeDataLen - 1,
                 parent,
             });
             // 不匹配直接跳过
             if (!currentMatch) continue;
-            if (Array.isArray(children) && children.length) {
+            if (Array.isArray(children) && childrenLen) {
                 if (childrenMatch) {
                     setTreePropsValue(treeNode, "children", _getFilterBySearch(children, scFunc, currentLevel + 1, treeNode, opt), opt);
                 }
@@ -34,21 +36,21 @@ function _getFilterBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, curren
                 setTreePropsValue(treeNode, "children", [], opt);
             }
             result.push(treeNode);
-            index += 1;
         }
     } else {
         // 父节点不需要匹配
         // 此时需要考虑，子节点是否匹配
-        let index = 0;
-        for (const treeNode of treeData) {
+        for (let index = 0; index < treeDataLen; index++) {
+            const treeNode = treeData[index];
             const children = getTreePropsValue(treeNode, "children", opt);
+            const childrenLen = children.length;
             // 当前节点是否匹配
             const currentMatch = !!scFunc(treeNode, {
                 level: currentLevel + 1,
                 index,
-                isLeaf: !children.length,
+                isLeaf: !childrenLen,
                 isFirst: index === 0,
-                isLast: index === treeData.length - 1,
+                isLast: index === treeDataLen - 1,
                 parent,
             });
             if (currentMatch) {
@@ -59,7 +61,7 @@ function _getFilterBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, curren
                 result.push(treeNode);
             } else {
                 // 当前节点不匹配
-                if (Array.isArray(children) && children.length) {
+                if (Array.isArray(children) && childrenLen) {
                     const childrenMatchResult = _getFilterBySearch(children, scFunc, currentLevel + 1, treeNode, opt);
                     // 如果此时还存在子节点就输出
                     if (Array.isArray(childrenMatchResult) && childrenMatchResult.length) {
@@ -69,7 +71,6 @@ function _getFilterBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, curren
                     }
                 }
             }
-            index += 1;
         }
     }
     return result;
