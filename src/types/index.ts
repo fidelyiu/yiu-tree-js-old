@@ -23,6 +23,10 @@ export type TreeNodeInfo = {
      * 父节点
      */
     parent: any;
+    /**
+     * 节点路径
+     */
+    nodePath: Array<any>;
 };
 /**
  * 树的搜索函数类型

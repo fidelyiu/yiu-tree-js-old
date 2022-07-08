@@ -3,26 +3,29 @@ import getTreePropsValue from "../base/get-tree-props-value";
 
 import type { TreeBaseOpt, TreeSearchFunc } from "../types";
 
-function _hasBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, currentLevel: number, parent: any, opt?: TreeBaseOpt): boolean {
-    let index = 0;
-    for (const treeNode of treeData) {
-        const children = getTreePropsValue(treeNode, "children", opt);
+function _hasBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, currentLevel: number, parent: any, nodePath: Array<any>, opt?: TreeBaseOpt): boolean {
+    const treeDataLen = treeData.length;
+    for (let index = 0; index < treeDataLen; index++) {
+        const item = treeData[index];
+        const currentNodePath = nodePath.slice();
+        currentNodePath.push(item);
+        const children = getTreePropsValue(item, "children", opt);
         if (
-            scFunc(treeNode, {
+            scFunc(item, {
                 level: currentLevel + 1,
                 index,
                 isLeaf: !children.length,
                 isFirst: index === 0,
                 isLast: index === treeData.length - 1,
                 parent,
+                nodePath: currentNodePath,
             })
         ) {
             return true;
         }
-        if (Array.isArray(children) && children.length && _hasBySearch(children, scFunc, currentLevel + 1, treeNode, opt)) {
+        if (Array.isArray(children) && children.length && _hasBySearch(children, scFunc, currentLevel + 1, item, currentNodePath, opt)) {
             return true;
         }
-        index += 1;
     }
     return false;
 }
@@ -38,5 +41,5 @@ export default function hasBySearch(treeData: Array<any>, scFunc: TreeSearchFunc
     if (typeof scFunc !== "function") return false;
     const deepData = getDeepTree(treeData, opt, false);
     if (!Array.isArray(deepData) || !deepData.length) return false;
-    return _hasBySearch(deepData, scFunc, 0, undefined, opt);
+    return _hasBySearch(deepData, scFunc, 0, undefined, [], opt);
 }

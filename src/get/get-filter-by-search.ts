@@ -4,7 +4,7 @@ import setTreePropsValue from "../base/set-tree-props-value";
 
 import type { TreeFilterOption, TreeSearchFunc } from "../types";
 
-function _getFilterBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, currentLevel: number, parent: any, opt?: TreeFilterOption): Array<any> {
+function _getFilterBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, currentLevel: number, parent: any, nodePath: Array<any>, opt?: TreeFilterOption): Array<any> {
     const result: Array<any> = [];
     if (!opt) opt = {};
     const parentMatch = !!opt.parentMatch;
@@ -14,6 +14,8 @@ function _getFilterBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, curren
         // 父节点必须匹配
         for (let index = 0; index < treeDataLen; index++) {
             const treeNode = treeData[index];
+            const currentNodePath = nodePath.slice();
+            currentNodePath.push(treeNode);
             // 处理子节点
             const children = getTreePropsValue(treeNode, "children", opt);
             const childrenLen = children.length;
@@ -25,12 +27,13 @@ function _getFilterBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, curren
                 isFirst: index === 0,
                 isLast: index === treeDataLen - 1,
                 parent,
+                nodePath: currentNodePath,
             });
             // 不匹配直接跳过
             if (!currentMatch) continue;
             if (Array.isArray(children) && childrenLen) {
                 if (childrenMatch) {
-                    setTreePropsValue(treeNode, "children", _getFilterBySearch(children, scFunc, currentLevel + 1, treeNode, opt), opt);
+                    setTreePropsValue(treeNode, "children", _getFilterBySearch(children, scFunc, currentLevel + 1, treeNode, currentNodePath, opt), opt);
                 }
             } else {
                 setTreePropsValue(treeNode, "children", [], opt);
@@ -42,6 +45,8 @@ function _getFilterBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, curren
         // 此时需要考虑，子节点是否匹配
         for (let index = 0; index < treeDataLen; index++) {
             const treeNode = treeData[index];
+            const currentNodePath = nodePath.slice();
+            currentNodePath.push(treeNode);
             const children = getTreePropsValue(treeNode, "children", opt);
             const childrenLen = children.length;
             // 当前节点是否匹配
@@ -52,17 +57,18 @@ function _getFilterBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, curren
                 isFirst: index === 0,
                 isLast: index === treeDataLen - 1,
                 parent,
+                nodePath: currentNodePath,
             });
             if (currentMatch) {
                 // 如果当前节点匹配了，就直接处理子节点
                 if (childrenMatch) {
-                    setTreePropsValue(treeNode, "children", _getFilterBySearch(children, scFunc, currentLevel + 1, treeNode, opt), opt);
+                    setTreePropsValue(treeNode, "children", _getFilterBySearch(children, scFunc, currentLevel + 1, treeNode, currentNodePath, opt), opt);
                 }
                 result.push(treeNode);
             } else {
                 // 当前节点不匹配
                 if (Array.isArray(children) && childrenLen) {
-                    const childrenMatchResult = _getFilterBySearch(children, scFunc, currentLevel + 1, treeNode, opt);
+                    const childrenMatchResult = _getFilterBySearch(children, scFunc, currentLevel + 1, treeNode, currentNodePath, opt);
                     // 如果此时还存在子节点就输出
                     if (Array.isArray(childrenMatchResult) && childrenMatchResult.length) {
                         // 将节点按照当前查询条件再过滤一遍
@@ -87,5 +93,5 @@ export default function getFilterBySearch(treeData: Array<any>, scFunc: TreeSear
     if (typeof scFunc !== "function") return [];
     const cloneTreeData = getDeepTree(treeData, opt, true);
     if (!Array.isArray(cloneTreeData) || !cloneTreeData.length) return [];
-    return _getFilterBySearch(cloneTreeData, scFunc, 0, undefined, opt);
+    return _getFilterBySearch(cloneTreeData, scFunc, 0, undefined, [], opt);
 }

@@ -3,29 +3,32 @@ import getTreePropsValue from "../base/get-tree-props-value";
 
 import type { TreeBaseOpt, TreeSearchFunc } from "../types";
 
-function _getOneNodePathBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, currentLevel: number, parent: any, opt?: TreeBaseOpt): Array<any> | [] {
-    let index = 0;
-    for (const treeNode of treeData) {
-        const children = getTreePropsValue(treeNode, "children", opt);
+function _getOneNodePathBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, currentLevel: number, parent: any, nodePath: Array<any>, opt?: TreeBaseOpt): Array<any> | [] {
+    const treeDataLen = treeData.length;
+    for (let index = 0; index < treeDataLen; index++) {
+        const item = treeData[index];
+        const currentNodePath = nodePath.slice();
+        currentNodePath.push(item);
+        const children = getTreePropsValue(item, "children", opt);
         if (
-            scFunc(treeNode, {
+            scFunc(item, {
                 level: currentLevel + 1,
                 index,
                 isLeaf: !children.length,
                 isFirst: index === 0,
                 isLast: index === treeData.length - 1,
                 parent,
+                nodePath: currentNodePath,
             })
         ) {
-            return [treeNode];
+            return [item];
         }
         if (Array.isArray(children) && children.length) {
-            const childrenResult = _getOneNodePathBySearch(children, scFunc, currentLevel + 1, treeNode, opt);
+            const childrenResult = _getOneNodePathBySearch(children, scFunc, currentLevel + 1, item, currentNodePath, opt);
             if (childrenResult && childrenResult.length) {
-                return [treeNode, ...childrenResult];
+                return [item, ...childrenResult];
             }
         }
-        index += 1;
     }
     return [];
 }
@@ -41,5 +44,5 @@ export default function getOneNodePathBySearch(treeData: Array<any>, scFunc: Tre
     if (typeof scFunc !== "function") return [];
     const deepData = getDeepTree(treeData, opt, true);
     if (!Array.isArray(deepData) || !deepData.length) return [];
-    return _getOneNodePathBySearch(deepData, scFunc, 0, undefined, opt);
+    return _getOneNodePathBySearch(deepData, scFunc, 0, undefined, [], opt);
 }

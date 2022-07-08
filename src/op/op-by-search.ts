@@ -4,11 +4,23 @@ import setTreePropsValue from "../base/set-tree-props-value";
 
 import type { TreeBaseOpt, TreeOperationFunc, TreeSearchFunc } from "../types";
 
-function _opBySearch(treeData: Array<any>, opFunc: TreeOperationFunc, scFunc: TreeSearchFunc, currentLevel: number, parent: any, opt?: TreeBaseOpt): Array<any> {
-    treeData.forEach((item, index) => {
+function _opBySearch(
+    treeData: Array<any>,
+    opFunc: TreeOperationFunc,
+    scFunc: TreeSearchFunc,
+    currentLevel: number,
+    parent: any,
+    nodePath: Array<any>,
+    opt?: TreeBaseOpt
+): Array<any> {
+    const treeDataLen = treeData.length;
+    for (let index = 0; index < treeDataLen; index++) {
+        const item = treeData[index];
+        const currentNodePath = nodePath.slice();
+        currentNodePath.push(item);
         const children = getTreePropsValue(item, "children", opt);
         if (Array.isArray(children) && children.length > 0) {
-            setTreePropsValue(item, "children", _opBySearch(children, opFunc, scFunc, currentLevel + 1, item, opt), opt);
+            setTreePropsValue(item, "children", _opBySearch(children, opFunc, scFunc, currentLevel + 1, item, currentNodePath, opt), opt);
         }
         if (
             scFunc(item, {
@@ -18,6 +30,7 @@ function _opBySearch(treeData: Array<any>, opFunc: TreeOperationFunc, scFunc: Tr
                 isFirst: index === 0,
                 isLast: index === treeData.length - 1,
                 parent,
+                nodePath: currentNodePath,
             })
         ) {
             // 符合要求的item
@@ -28,9 +41,10 @@ function _opBySearch(treeData: Array<any>, opFunc: TreeOperationFunc, scFunc: Tr
                 isFirst: index === 0,
                 isLast: index === treeData.length - 1,
                 parent,
+                nodePath: currentNodePath,
             });
         }
-    });
+    }
     return treeData;
 }
 
@@ -46,5 +60,5 @@ export default function opBySearch(treeData: Array<any>, opFunc: TreeOperationFu
     if (typeof scFunc !== "function" || typeof opFunc !== "function") return treeData;
     const deepData = getDeepTree(treeData, opt, true);
     if (!Array.isArray(deepData)) return treeData;
-    return _opBySearch(deepData, opFunc, scFunc, 0, undefined, opt);
+    return _opBySearch(deepData, opFunc, scFunc, 0, undefined, [], opt);
 }
