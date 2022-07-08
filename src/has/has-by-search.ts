@@ -19,6 +19,7 @@ function _hasBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, currentLevel
                 isLast: index === treeData.length - 1,
                 parent,
                 path: currentPath,
+                parentPath: nodePath,
             })
         ) {
             return true;

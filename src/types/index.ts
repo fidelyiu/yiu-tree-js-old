@@ -26,7 +26,11 @@ export type TreeNodeInfo = {
     /**
      * 节点路径
      */
-    path: Array<any>;
+    path: readonly any[];
+    /**
+     * 父节点路径
+     */
+    parentPath: readonly any[];
 };
 /**
  * 树的搜索函数类型

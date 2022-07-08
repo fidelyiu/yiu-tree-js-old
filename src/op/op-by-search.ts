@@ -31,6 +31,7 @@ function _opBySearch(
                 isLast: index === treeData.length - 1,
                 parent,
                 path: currentPath,
+                parentPath: nodePath,
             })
         ) {
             // 符合要求的item
@@ -42,6 +43,7 @@ function _opBySearch(
                 isLast: index === treeData.length - 1,
                 parent,
                 path: currentPath,
+                parentPath: nodePath,
             });
         }
     }

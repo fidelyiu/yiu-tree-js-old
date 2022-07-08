@@ -19,6 +19,7 @@ function _getOneNodePathBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, c
                 isLast: index === treeData.length - 1,
                 parent,
                 path: currentPath,
+                parentPath: nodePath,
             })
         ) {
             return [item];

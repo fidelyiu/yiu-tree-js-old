@@ -28,6 +28,7 @@ function _getFilterBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, curren
                 isLast: index === treeDataLen - 1,
                 parent,
                 path: currentPath,
+                parentPath: nodePath,
             });
             // 不匹配直接跳过
             if (!currentMatch) continue;
@@ -58,6 +59,7 @@ function _getFilterBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, curren
                 isLast: index === treeDataLen - 1,
                 parent,
                 path: currentPath,
+                parentPath: nodePath,
             });
             if (currentMatch) {
                 // 如果当前节点匹配了，就直接处理子节点
