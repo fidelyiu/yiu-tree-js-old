@@ -7,8 +7,8 @@ function _getOneNodePathBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, c
     const treeDataLen = treeData.length;
     for (let index = 0; index < treeDataLen; index++) {
         const item = treeData[index];
-        const currentNodePath = nodePath.slice();
-        currentNodePath.push(item);
+        const currentPath = nodePath.slice();
+        currentPath.push(item);
         const children = getTreePropsValue(item, "children", opt);
         if (
             scFunc(item, {
@@ -18,13 +18,13 @@ function _getOneNodePathBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, c
                 isFirst: index === 0,
                 isLast: index === treeData.length - 1,
                 parent,
-                nodePath: currentNodePath,
+                path: currentPath,
             })
         ) {
             return [item];
         }
         if (Array.isArray(children) && children.length) {
-            const childrenResult = _getOneNodePathBySearch(children, scFunc, currentLevel + 1, item, currentNodePath, opt);
+            const childrenResult = _getOneNodePathBySearch(children, scFunc, currentLevel + 1, item, currentPath, opt);
             if (childrenResult && childrenResult.length) {
                 return [item, ...childrenResult];
             }

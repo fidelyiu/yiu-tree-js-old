@@ -7,8 +7,8 @@ function _hasBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, currentLevel
     const treeDataLen = treeData.length;
     for (let index = 0; index < treeDataLen; index++) {
         const item = treeData[index];
-        const currentNodePath = nodePath.slice();
-        currentNodePath.push(item);
+        const currentPath = nodePath.slice();
+        currentPath.push(item);
         const children = getTreePropsValue(item, "children", opt);
         if (
             scFunc(item, {
@@ -18,12 +18,12 @@ function _hasBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, currentLevel
                 isFirst: index === 0,
                 isLast: index === treeData.length - 1,
                 parent,
-                nodePath: currentNodePath,
+                path: currentPath,
             })
         ) {
             return true;
         }
-        if (Array.isArray(children) && children.length && _hasBySearch(children, scFunc, currentLevel + 1, item, currentNodePath, opt)) {
+        if (Array.isArray(children) && children.length && _hasBySearch(children, scFunc, currentLevel + 1, item, currentPath, opt)) {
             return true;
         }
     }

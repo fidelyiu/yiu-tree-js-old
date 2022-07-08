@@ -26,7 +26,7 @@ export type TreeNodeInfo = {
     /**
      * 节点路径
      */
-    nodePath: Array<any>;
+    path: Array<any>;
 };
 /**
  * 树的搜索函数类型

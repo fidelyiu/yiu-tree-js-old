@@ -16,11 +16,11 @@ function _opBySearch(
     const treeDataLen = treeData.length;
     for (let index = 0; index < treeDataLen; index++) {
         const item = treeData[index];
-        const currentNodePath = nodePath.slice();
-        currentNodePath.push(item);
+        const currentPath = nodePath.slice();
+        currentPath.push(item);
         const children = getTreePropsValue(item, "children", opt);
         if (Array.isArray(children) && children.length > 0) {
-            setTreePropsValue(item, "children", _opBySearch(children, opFunc, scFunc, currentLevel + 1, item, currentNodePath, opt), opt);
+            setTreePropsValue(item, "children", _opBySearch(children, opFunc, scFunc, currentLevel + 1, item, currentPath, opt), opt);
         }
         if (
             scFunc(item, {
@@ -30,7 +30,7 @@ function _opBySearch(
                 isFirst: index === 0,
                 isLast: index === treeData.length - 1,
                 parent,
-                nodePath: currentNodePath,
+                path: currentPath,
             })
         ) {
             // 符合要求的item
@@ -41,7 +41,7 @@ function _opBySearch(
                 isFirst: index === 0,
                 isLast: index === treeData.length - 1,
                 parent,
-                nodePath: currentNodePath,
+                path: currentPath,
             });
         }
     }
