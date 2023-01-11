@@ -9,7 +9,7 @@ import type { TreeBaseOpt, TreeSearchFunc } from "../types";
  * @param opt 解析节点配置
  * @returns 找到的节点
  */
-export default function getOneNodeBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, opt?: TreeBaseOpt): Array<any> | undefined {
+export default function getOneNodeBySearch(treeData: Array<any>, scFunc: TreeSearchFunc, opt?: TreeBaseOpt): any | undefined {
     const result = getOneNodePathBySearch(treeData, scFunc, opt);
     if (result && result.length) {
         return result[result.length - 1];
